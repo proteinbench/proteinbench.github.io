@@ -1,0 +1,2139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="a holistic evaluation of protein foundation models">
+  <meta name="keywords" content="proteinbench">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> ProteinBench: A Holistic Evaluation of Protein Foundation Models</title>
+
+
+
+  <link rel="icon" href="./images/pb_logo.png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/leaderboard.css">
+  <script type="text/javascript" src="static/js/sort-table.js" defer></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title is-bold">
+            <img src="images/pb_logo.png" style="width:1em;vertical-align: middle" alt="Logo"/>
+            <span class="proteinbench" style="vertical-align: middle">ProteinBench</span>
+            </h1>
+          <h2 class="subtitle is-3 publication-subtitle">
+            A Holistic Evaluation of Protein Foundation Models
+          </h2>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="">Fei Ye</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Zaixiang Zheng</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Dongyu Xue</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Yuning Shen</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Lihao Wang</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Yiming Ma</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Yan Wang</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Xinyou Wang</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Xiangxin Zhou</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Quanquan Gu</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Bytedance Research</span><br>
+          </div>
+        
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2409.06744"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2409.06744"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="TODO.html"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a href="TODO.html"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p style="font-size:18px">🤗</p>
+                  </span>
+                  <span>Leaderboard</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="TODO.html"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p style="font-size:18px">🌐</p>
+                  </span>
+                  <span>Twitter</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Introduction</h2>
+        <div class="content has-text-justified">
+          <p>
+            Recent years have witnessed a surge in the development of protein foundation models, significantly improving performance in protein prediction and generative tasks ranging from 3D structure prediction and protein design to conformational dynamics. 
+            However, the capabilities and limitations associated with these models remain poorly understood due to the absence of a unified evaluation framework. 
+            To fill this gap, we introduce <img src="images/pb_logo.png" style="width:1.6em;vertical-align: middle" alt="Logo"/>
+            <span class="proteinbench">ProteinBench</span>, a holistic evaluation framework designed to enhance the transparency of protein foundation models. 
+            Our approach consists of three key components: (i) A taxonomic classification of tasks that broadly encompass the main challenges in the protein domain, based on the relationships between different protein modalities; (ii) A multi-metric evaluation approach that assesses performance across four key dimensions: quality, novelty, diversity, and robustness; and (iii) In-depth analyses from various user objectives, providing a holistic view of model performance. Our comprehensive evaluation of protein foundation models reveals several key findings that shed light on their current capabilities and limitations. To promote transparency and facilitate further research, we release the evaluation dataset, code, and a public leaderboard publicly for further analysis and a general modular toolkit. We intend for ProteinBench to be a living benchmark for establishing a standardized, in-depth evaluation framework for protein foundation models, driving their development and application while fostering collaboration within the field. 
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3" id="leaderboard">Inverse Folding</h2>
+        <div class="content">
+          <div class="content has-text-justified">
+            <p class="mt-3"> We evaluate the performance of various inverse-folding models for structure-based sequence design, focusing on two distinct objectives: natural evolutionary fitness (in-distribution proteins) and de novo designed backbone-based sequence design. The latter represents an out-of-distribution problem that tests the robustness of the methods, as these structures typically contain some noise different from high-resolution structure deposited in PDBs.
+            </p>
+            <p>
+              The following table shows the performance of structure-based sequence design models on inverse folding tasks. The reported results are the median of repetitive experiments. ’N/A’ stands for not applicable. ESMIF1 and ESM3 use all native structures and sequences for model training, therefore, they not measured in the evolution distribution fitting objective.
+            </p>
+          </div>
+          <table class="js-sort-table" id="results">
+            <thead>
+              <tr>
+                <th rowspan="1"><strong>Model</strong></th>
+                <th colspan="2"><strong>Fitting Evolution Distribution</strong></th>
+                <th colspan="10"><strong>De novo backbones based sequence design</strong></th>
+              </tr>
+              <tr>
+                <th class="js-sort"></th>
+                <th class="js-sort-number"><strong>CASP AAR &uarr;</strong></th>
+                <th class="js-sort-number"><strong>CAMEO AAR &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 100 scTM &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 100 pLDDT &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 200 scTM &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 200 pLDDT &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 300 scTM &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 300 pLDDT &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 400 scTM &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 400 pLDDT &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 500 scTM &uarr;</strong></th>
+                <th class="js-sort-number"><strong>length 500 pLDDT &uarr;</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ProteinMPNN</strong></td>
+                <td>0.450</td>
+                <td>0.468</td>
+                <td><strong>0.962</strong></td>
+                <td><strong>94.14</strong></td>
+                <td><strong>0.945</strong></td>
+                <td><strong>89.34</strong></td>
+                <td><strong>0.962</strong></td>
+                <td><strong>90.28</strong></td>
+                <td><strong>0.875</strong></td>
+                <td><strong>83.76</strong></td>
+                <td><strong>0.568</strong></td>
+                <td><strong>67.09</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ESM-IF1</strong></td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>0.810</td>
+                <td>88.83</td>
+                <td>0.635</td>
+                <td>69.67</td>
+                <td>0.336</td>
+                <td>74.36</td>
+                <td>0.449</td>
+                <td>64.59</td>
+                <td>0.462</td>
+                <td>58.97</td>
+              </tr>
+              <tr>
+                <td><strong>LM-Design</strong></td>
+                <td><strong>0.516</strong></td>
+                <td><strong>0.570</strong></td>
+                <td>0.834</td>
+                <td>78.45</td>
+                <td>0.373</td>
+                <td>58.41</td>
+                <td>0.481</td>
+                <td>69.86</td>
+                <td>0.565</td>
+                <td>59.87</td>
+                <td>0.397</td>
+                <td>56.35</td>
+              </tr>
+              <tr>
+                <td><strong>ESM3</strong></td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>0.942</td>
+                <td>86.60</td>
+                <td>0.486</td>
+                <td>60.69</td>
+                <td>0.632</td>
+                <td>70.78</td>
+                <td>0.564</td>
+                <td>62.63</td>
+                <td>0.452</td>
+                <td>59.37</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="title is-3" id="leaderboard_test">Structure Design</h2>
+        <div class="content">
+          <div class="content has-text-justified">
+            <p>
+              We evaluate the performance of protein foundation models for backbone design. Our analysis focuses on the quality, novelty, and diversity of the generated structures across various chain lengths.
+            </p>
+            <p>
+              The following table shows the performance of backbone design models evaluated using various lengths ranging from 50 to 500. The reported results are the median of repetitive experiments. We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. For the novelty and diversity metrics, we only highlight results with the corresponding scTM score higher than 0.5. 'N/A' stands for not applicable.
+            </p>
+          </div>
+          <table class="js-sort-table" id="results">
+            <thead>
+              <tr>
+                <th rowspan="1" class="js-sort-number"><strong>Model</strong></th>
+                <th colspan="5" class="js-sort-number"><strong>length 50</strong></th>
+                <th colspan="5" class="js-sort-number"><strong>length 100</strong></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                <th class="js-sort-number"><strong>Novelty</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Diversity</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                <th class="js-sort-number"><strong>Novelty</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Diversity</strong></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th class="js-sort-number"><strong>scTM &uarr;</strong></th>
+                <th class="js-sort-number"><strong>scRMSD &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>pairwise TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                <th class="js-sort-number"><strong>scTM &uarr;</strong></th>
+                <th class="js-sort-number"><strong>scRMSD &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>pairwise TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background-color: #f7f7f7">
+                <td><strong>Native PDBs</strong></td>
+                <td>0.91</td>
+                <td>0.74</td>
+                <td>N/A</td>
+                <td>0.29</td>
+                <td>0.66</td>
+                <td>0.96</td>
+                <td>0.67</td>
+                <td>N/A</td>
+                <td>0.30</td>
+                <td>0.77</td>
+              </tr>
+              <tr>
+                <td><strong>RFdiffusion</strong></td>
+                <td><strong>0.95</strong></td>
+                <td><strong>0.45</strong></td>
+                <td>0.65</td>
+                <td>0.58</td>
+                <td>0.67</td>
+                <td><strong>0.98</strong></td>
+                <td><strong>0.48</strong></td>
+                <td>0.76</td>
+                <td>0.41</td>
+                <td>0.32</td>
+              </tr>
+              <tr>
+                <td><u>FrameFlow</u></td>
+                <td><u>0.91</u></td>
+                <td><u>0.58</u></td>
+                <td>0.75</td>
+                <td>0.68</td>
+                <td>0.39</td>
+                <td><u>0.94</u></td>
+                <td><u>0.70</u></td>
+                <td>0.72</td>
+                <td>0.55</td>
+                <td>0.49</td>
+              </tr>
+              <tr>
+                <td>Chroma</td>
+                <td>0.85</td>
+                <td>1.05</td>
+                <td><u>0.59</u></td>
+                <td>0.29</td>
+                <td>0.48</td>
+                <td>0.89</td>
+                <td>1.27</td>
+                <td>0.70</td>
+                <td><u>0.35</u></td>
+                <td>0.59</td>
+              </tr>
+              <tr>
+                <td>FrameDiff(latest)</td>
+                <td>0.85</td>
+                <td>1.00</td>
+                <td>0.67</td>
+                <td>0.35</td>
+                <td>0.64</td>
+                <td>0.90</td>
+                <td>1.23</td>
+                <td>0.71</td>
+                <td>0.52</td>
+                <td>0.11</td>
+              </tr>
+              <tr>
+                <td>FoldFlow1(sfm)</td>
+                <td>0.90</td>
+                <td>0.67</td>
+                <td>0.68</td>
+                <td>0.63</td>
+                <td>0.48</td>
+                <td>0.87</td>
+                <td>1.34</td>
+                <td>0.65</td>
+                <td>0.49</td>
+                <td><u>0.83</u></td>
+              </tr>
+              <tr>
+                <td>FoldFlow1(base)</td>
+                <td>0.79</td>
+                <td>1.19</td>
+                <td>0.66</td>
+                <td><u>0.53</u></td>
+                <td>0.76</td>
+                <td>0.81</td>
+                <td>1.70</td>
+                <td><u>0.62</u></td>
+                <td>0.48</td>
+                <td><u>0.83</u></td>
+              </tr>
+              <tr>
+                <td>FoldFlow1(ot)</td>
+                <td>0.83</td>
+                <td>1.10</td>
+                <td>0.65</td>
+                <td><u>0.53</u></td>
+                <td><u>0.77</u></td>
+                <td>0.83</td>
+                <td>1.60</td>
+                <td>0.64</td>
+                <td>0.48</td>
+                <td>0.81</td>
+              </tr>
+              <tr>
+                <td><strong>Genie</strong></td>
+                <td>0.57</td>
+                <td>3.12</td>
+                <td><strong>0.57</strong></td>
+                <td><strong>0.32</strong></td>
+                <td><strong>0.90</strong></td>
+                <td>0.69</td>
+                <td>3.38</td>
+                <td><strong>0.59</strong></td>
+                <td><strong>0.31</strong></td>
+                <td><strong>0.96</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="js-sort-table" id="results">
+            <!-- <caption>
+              Performance of backbone design models evaluated using various lengths ranging from 50 to 500. The reported results are the median of repetitive experiments. We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. For the novelty and diversity metrics, we only highlight results with the corresponding scTM score higher than 0.5. 'N/A' stands for not applicable.
+            </caption> -->
+            <thead>
+              <tr>
+                <th rowspan="1" class="js-sort-number"><strong>Model</strong></th>
+                <th colspan="5" class="js-sort-number"><strong>length 300</strong></th>
+                <th colspan="5" class="js-sort-number"><strong>length 500</strong></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                <th class="js-sort-number"><strong>Novelty</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Diversity</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                <th class="js-sort-number"><strong>Novelty</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Diversity</strong></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th class="js-sort-number"><strong>scTM &uarr;</strong></th>
+                <th class="js-sort-number"><strong>scRMSD &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>pairwise TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                <th class="js-sort-number"><strong>scTM &uarr;</strong></th>
+                <th class="js-sort-number"><strong>scRMSD &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>pairwise TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background-color: #f7f7f7">
+                <td><strong>Native PDBs</strong></td>
+                <td>0.97</td>
+                <td>0.82</td>
+                <td>N/A</td>
+                <td>0.28</td>
+                <td>0.77</td>
+                <td>0.97</td>
+                <td>1.07</td>
+                <td>N/A</td>
+                <td>0.29</td>
+                <td>0.80</td>
+              </tr>
+              <tr>
+                <td><strong>RFdiffusion</strong></td>
+                <td><strong>0.96</strong></td>
+                <td><strong>1.03</strong></td>
+                <td><u>0.64</u></td>
+                <td><strong>0.36</strong></td>
+                <td>0.65</td>
+                <td><strong>0.79</strong></td>
+                <td><strong>5.60</strong></td>
+                <td>0.62</td>
+                <td><u>0.33</u></td>
+                <td><u>0.89</u></td>
+              </tr>
+              <tr>
+                <td><u>FrameFlow</u></td>
+                <td><u>0.92</u></td>
+                <td><u>1.95</u></td>
+                <td>0.65</td>
+                <td>0.43</td>
+                <td><u>0.88</u></td>
+                <td>0.61</td>
+                <td>7.92</td>
+                <td>0.61</td>
+                <td>0.40</td>
+                <td>0.92</td>
+              </tr>
+              <tr>
+                <td>Chroma</td>
+                <td>0.87</td>
+                <td>2.47</td>
+                <td>0.66</td>
+                <td><strong>0.36</strong></td>
+                <td>0.67</td>
+                <td><u>0.72</u></td>
+                <td><u>6.71</u></td>
+                <td><u>0.60</u></td>
+                <td><strong>0.29</strong></td>
+                <td><strong>0.99</strong></td>
+              </tr>
+              <tr>
+                <td>FrameDiff(latest)</td>
+                <td>0.87</td>
+                <td>2.73</td>
+                <td>0.69</td>
+                <td>0.48</td>
+                <td>0.21</td>
+                <td>0.63</td>
+                <td>9.52</td>
+                <td><strong>0.58</strong></td>
+                <td>0.40</td>
+                <td>0.52</td>
+              </tr>
+              <tr>
+                <td>FoldFlow1(sfm)</td>
+                <td>0.45</td>
+                <td>9.04</td>
+                <td>0.54</td>
+                <td>0.39</td>
+                <td>1.00</td>
+                <td>0.37</td>
+                <td>13.04</td>
+                <td>0.53</td>
+                <td>0.37</td>
+                <td>1.00</td>
+              </tr>
+              <tr>
+                <td>FoldFlow1(base)</td>
+                <td>0.43</td>
+                <td>9.56</td>
+                <td>0.54</td>
+                <td>0.39</td>
+                <td>0.98</td>
+                <td>0.35</td>
+                <td>13.20</td>
+                <td>0.52</td>
+                <td>0.39</td>
+                <td>1.00</td>
+              </tr>
+              <tr>
+                <td>FoldFlow1(ot)</td>
+                <td>0.54</td>
+                <td>8.21</td>
+                <td><strong>0.58</strong></td>
+                <td>0.41</td>
+                <td><strong>0.94</strong></td>
+                <td>0.37</td>
+                <td>12.48</td>
+                <td>0.51</td>
+                <td>0.35</td>
+                <td>1.00</td>
+              </tr>
+              <tr>
+                <td><strong>Genie</strong></td>
+                <td>0.27</td>
+                <td>20.37</td>
+                <td>0.30</td>
+                <td>0.23</td>
+                <td>1.00</td>
+                <td>0.25</td>
+                <td>26.08</td>
+                <td>0.22</td>
+                <td>0.23</td>
+                <td>1.00</td>
+              </tr>
+            </tbody>
+          </table>
+
+
+          <h2 class="title is-3" id="leaderboard_test">Sequence Design</h2>
+          <div class="content">
+            <div class="content has-text-justified">
+              <p>
+                We assess the performance of various protein sequence generative models based on the quality, diversity, and novelty of their generated sequences across different chain lengths.
+              </p>
+              <p>
+                The following table shows the performance of protein sequence generative models/language models on sequence generation tasks. The reported results are the average of repetitive experiments. 
+                The pLDDT score is the output of AlphaFold2. Max TM is an abbreviation for Maximum TM-score to PDB database. 'N/A' stands for not applicable. We highlight the <strong>best</strong> performance in bold.
+              </p>
+            </div>
+          
+          <!-- Table 1: length 100 and length 200 -->
+          <table class="js-sort-table" id="results">
+            <!-- Table header -->
+            <thead>
+              <tr>
+                <th rowspan="1" class="js-sort-number"><strong>Model</strong></th>
+                <th colspan="5" class="js-sort-number"><strong>length 100</strong></th>
+                <th colspan="5" class="js-sort-number"><strong>length 200</strong></th>
+              </tr>
+          
+              <!-- Quality and Diversity headers within both lengths -->
+              <tr>
+                <th></th>
+                <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Diversity</strong></th>
+                <th class="js-sort-number"><strong>Novelty</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Diversity</strong></th>
+                <th class="js-sort-number"><strong>Novelty</strong></th>
+              </tr>
+          
+              <!-- Metrics headers within quality, diversity, and novelty -->
+              <tr>
+                <th></th>
+                <th class="js-sort-number"><strong>ppl &darr;</strong></th>
+                <th class="js-sort-number"><strong>pLDDT &uarr;</strong></th>
+                <th class="js-sort-number"><strong>pairwise TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>ppl &darr;</strong></th>
+                <th class="js-sort-number"><strong>pLDDT &uarr;</strong></th>
+                <th class="js-sort-number"><strong>pairwise TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+              </tr>
+            </thead>
+          
+            <!-- Table body -->
+            <tbody>
+              <tr style="background-color: #f7f7f7">
+                <td><strong>Native Seqs</strong></td>
+                <td></td>
+                <td>68.46</td>
+                <td>0.55</td>
+                <td>0.75</td>
+                <td>N/A</td>
+                <td></td>
+                <td>61.91</td>
+                <td>0.49</td>
+                <td>0.78</td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td><strong>Progen 2 (700M)</strong></td>
+                <td>8.28</td>
+                <td>64.00</td>
+                <td><strong>0.42</strong></td>
+                <td>0.94</td>
+                <td><strong>0.64</strong></td>
+                <td>5.68</td>
+                <td>69.91</td>
+                <td>0.40</td>
+                <td>0.91</td>
+                <td><strong>0.69</strong></td>
+              </tr>
+              <tr>
+                <td><strong>EvoDiff</strong></td>
+                <td>16.89</td>
+                <td>50.20</td>
+                <td>0.43</td>
+                <td><strong>0.98</strong></td>
+                <td>0.69</td>
+                <td>17.28</td>
+                <td>50.66</td>
+                <td>0.36</td>
+                <td>1.00</td>
+                <td>0.71</td>
+              </tr>
+              <tr>
+                <td><strong>DPLM (650M)</strong></td>
+                <td><strong>6.21</strong></td>
+                <td><strong>85.38</strong></td>
+                <td>0.50</td>
+                <td>0.80</td>
+                <td>0.74</td>
+                <td><strong>4.61</strong></td>
+                <td><strong>93.54</strong></td>
+                <td>0.54</td>
+                <td>0.70</td>
+                <td>0.91</td>
+              </tr>
+              <tr>
+                <td><strong>ESM3 (1.4B)</strong></td>
+                <td>14.79</td>
+                <td>54.26</td>
+                <td>0.45</td>
+                <td>0.90</td>
+                <td>0.68</td>
+                <td>12.96</td>
+                <td>58.45</td>
+                <td><strong>0.35</strong></td>
+                <td><strong>1.00</strong></td>
+                <td>0.80</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- Table 2: length 300 and length 500 -->
+          <table class="js-sort-table" id="results">
+            <!-- Table header -->
+            <thead>
+              <tr>
+                <th rowspan="1" class="js-sort-number"><strong>Model</strong></th>
+                <th colspan="5" class="js-sort-number"><strong>length 300</strong></th>
+                <th colspan="5" class="js-sort-number"><strong>length 500</strong></th>
+              </tr>
+          
+              <!-- Quality and Diversity headers within both lengths -->
+              <tr>
+                <th></th>
+                <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Diversity</strong></th>
+                <th class="js-sort-number"><strong>Novelty</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                <th colspan="2" class="js-sort-number"><strong>Diversity</strong></th>
+                <th class="js-sort-number"><strong>Novelty</strong></th>
+              </tr>
+          
+              <!-- Metrics headers within quality, diversity, and novelty -->
+              <tr>
+                <th></th>
+                <th class="js-sort-number"><strong>ppl &darr;</strong></th>
+                <th class="js-sort-number"><strong>pLDDT &uarr;</strong></th>
+                <th class="js-sort-number"><strong>pairwise TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>ppl &darr;</strong></th>
+                <th class="js-sort-number"><strong>pLDDT &uarr;</strong></th>
+                <th class="js-sort-number"><strong>pairwise TM &darr;</strong></th>
+                <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background-color: #f7f7f7">
+                <td><strong>Native Seqs</strong></td>
+                <td></td>
+                <td>61.49</td>
+                <td>0.51</td>
+                <td>0.85</td>
+                <td>N/A</td>
+                <td></td>
+                <td>62.95</td>
+                <td>0.51</td>
+                <td>0.78</td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td><strong>Progen 2 (700M)</strong></td>
+                <td>6.25</td>
+                <td>65.69</td>
+                <td>0.42</td>
+                <td>0.93</td>
+                <td><strong>0.66</strong></td>
+                <td>4.27</td>
+                <td>61.45</td>
+                <td>0.32</td>
+                <td>0.95</td>
+                <td>0.68</td>
+              </tr>
+              <tr>
+                <td><strong>EvoDiff</strong></td>
+                <td>17.13</td>
+                <td>45.14</td>
+                <td><strong>0.31</strong></td>
+                <td><strong>1.00</strong></td>
+                <td>0.68</td>
+                <td>16.51</td>
+                <td>43.14</td>
+                <td><strong>0.31</strong></td>
+                <td><strong>1.00</strong></td>
+                <td>0.69</td>
+              </tr>
+              <tr>
+                <td><strong>DPLM (650M)</strong></td>
+                <td><strong>3.47</strong></td>
+                <td><strong>93.07</strong></td>
+                <td>0.57</td>
+                <td>0.63</td>
+                <td>0.91</td>
+                <td><strong>3.33</strong></td>
+                <td><strong>87.73</strong></td>
+                <td>0.43</td>
+                <td>0.85</td>
+                <td>0.85</td>
+              </tr>
+              <tr>
+                <td><strong>ESM3 (1.4B)</strong></td>
+                <td>14.59</td>
+                <td>48.08</td>
+                <td>0.32</td>
+                <td><strong>1.00</strong></td>
+                <td>0.75</td>
+                <td>11.10</td>
+                <td>52.17</td>
+                <td>0.30</td>
+                <td><strong>1.00</strong></td>
+                <td><strong>0.54</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          
+
+          <h2 class="title is-3" id="leaderboard_test">Sequence and Structure Co-Design</h2>
+          <div class="content">
+            <div class="content has-text-justified">
+              <p>
+                We assess the performance of various protein sequence generative models based on the quality, diversity, and novelty of their generated sequences across different chain lengths. The evaluation metrics include AlphaFold2 (AF2) predicted pLDDT scores for structural plausibility (quality), maximum TM-score and maximum cluster values for structural diversity, and maximum TM-score to PDB structures for structural novelty.
+              </p>
+              <p>
+                The following table shows the performance of protein sequence generative models/language models on sequence generation tasks. The reported results are the average of repetitive experiments with the standard derivation. The pLDDT score is the output of AlphaFold2. Max TM is an abbreviation for Maximum TM-score to PDB database. 'N/A' stands for not applicable. We highlight the <strong>best</strong> performance in bold.
+              </p>
+            </div>  
+
+            
+            <table class="js-sort-table" id="results">
+              <thead>
+                  <tr>
+                      <th rowspan="1" class="js-sort-number"><strong>Model</strong></th>
+                      <th colspan="4" class="js-sort-number"><strong>Length 100</strong></th>
+                      <th colspan="4" class="js-sort-number"><strong>Length 200</strong></th>
+                  </tr>
+                  <tr>
+                      <th></th>
+                      <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                      <th class="js-sort-number"><strong>Diversity</strong></th>
+                      <th class="js-sort-number"><strong>Novelty</strong></th>
+                      <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                      <th class="js-sort-number"><strong>Diversity</strong></th>
+                      <th class="js-sort-number"><strong>Novelty</strong></th>
+                  </tr>
+                  <tr>
+                      <th></th>
+                      <th class="js-sort-number"><strong>scTM &uarr;</strong></th>
+                      <th class="js-sort-number"><strong>scRMSD &darr;</strong></th>
+                      <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                      <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                      <th class="js-sort-number"><strong>scTM &uarr;</strong></th>
+                      <th class="js-sort-number"><strong>scRMSD &darr;</strong></th>
+                      <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                      <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr class="row-highlight">
+                      <td><strong>Native PDBs</strong></td>
+                      <td>0.91</td>
+                      <td>2.98</td>
+                      <td>0.75</td>
+                      <td>N/A</td>
+                      <td>0.88</td>
+                      <td>3.24</td>
+                      <td>0.77</td>
+                      <td>N/A</td>
+                  </tr>
+                  <tr>
+                      <td>ProteinGenerator</td>
+                      <td>0.91</td>
+                      <td>3.75</td>
+                      <td>0.24</td>
+                      <td>0.73</td>
+                      <td>0.88</td>
+                      <td>6.24</td>
+                      <td>0.25</td>
+                      <td>0.72</td>
+                  </tr>
+                  <tr>
+                      <td>ProtPardelle*</td>
+                      <td>0.56</td>
+                      <td>12.9</td>
+                      <td>0.57</td>
+                      <td>0.66</td>
+                      <td>0.64</td>
+                      <td>13.67</td>
+                      <td>0.10</td>
+                      <td>0.69</td>
+                  </tr>
+                  <tr>
+                      <td>Multiflow</td>
+                      <td><strong>0.96</strong></td>
+                      <td><strong>1.10</strong></td>
+                      <td>0.33</td>
+                      <td>0.71</td>
+                      <td><strong>0.95</strong></td>
+                      <td><strong>1.61</strong></td>
+                      <td>0.42</td>
+                      <td>0.71</td>
+                  </tr>
+                  <tr>
+                      <td>ESM3*</td>
+                      <td>0.72</td>
+                      <td>13.80</td>
+                      <td><strong>0.64</strong></td>
+                      <td><strong>0.41</strong></td>
+                      <td>0.63</td>
+                      <td>21.18</td>
+                      <td><strong>0.63</strong></td>
+                      <td><strong>0.61</strong></td>
+                  </tr>
+              </tbody>
+          </table>
+
+
+          <table class="js-sort-table" id="results">
+            <thead>
+                <tr>
+                    <th rowspan="1" class="js-sort-number"><strong>Model</strong></th>
+                    <th colspan="4" class="js-sort-number"><strong>Length 300</strong></th>
+                    <th colspan="4" class="js-sort-number"><strong>Length 500</strong></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                    <th class="js-sort-number"><strong>Diversity</strong></th>
+                    <th class="js-sort-number"><strong>Novelty</strong></th>
+                    <th colspan="2" class="js-sort-number"><strong>Quality</strong></th>
+                    <th class="js-sort-number"><strong>Diversity</strong></th>
+                    <th class="js-sort-number"><strong>Novelty</strong></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th class="js-sort-number"><strong>scTM &uarr;</strong></th>
+                    <th class="js-sort-number"><strong>scRMSD &darr;</strong></th>
+                    <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                    <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                    <th class="js-sort-number"><strong>scTM &uarr;</strong></th>
+                    <th class="js-sort-number"><strong>scRMSD &darr;</strong></th>
+                    <th class="js-sort-number"><strong>Max Clust. &uarr;</strong></th>
+                    <th class="js-sort-number"><strong>Max TM &darr;</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="row-highlight">
+                    <td><strong>Native PDBs</strong></td>
+                    <td>0.92</td>
+                    <td>3.94</td>
+                    <td>0.75</td>
+                    <td>N/A</td>
+                    <td>0.90</td>
+                    <td>9.64</td>
+                    <td>0.80</td>
+                    <td>N/A</td>
+                </tr>
+                <tr>
+                    <td>ProteinGenerator</td>
+                    <td>0.81</td>
+                    <td>9.26</td>
+                    <td>0.22</td>
+                    <td><strong>0.71</strong></td>
+                    <td>0.69</td>
+                    <td>17.00</td>
+                    <td>0.18</td>
+                    <td>0.73</td>
+                </tr>
+                <tr>
+                  <td>ProtPardelle*</td>
+                  <td>0.69</td>
+                  <td>14.91</td>
+                  <td>0.04</td>
+                  <td>0.72</td>
+                  <td>0.44</td>
+                  <td>43.15</td>
+                  <td>0.60</td>
+                  <td>0.69</td>
+              </tr>
+              <tr>
+                  <td>Multiflow</td>
+                  <td><strong>0.96</strong></td>
+                  <td><strong>2.14</strong></td>
+                  <td><strong>0.58</strong></td>
+                  <td><strong>0.71</strong></td>
+                  <td><strong>0.95</strong></td>
+                  <td><strong>2.71</strong></td>
+                  <td><strong>0.62</strong></td>
+                  <td><strong>0.71</strong></td>
+              </tr>
+              <tr>
+                  <td>ESM3*</td>
+                  <td>0.59</td>
+                  <td>25.5</td>
+                  <td>0.52</td>
+                  <td>0.73</td>
+                  <td>0.64</td>
+                  <td>26.72</td>
+                  <td>0.46</td>
+                  <td>0.78</td>
+              </tr>
+          </tbody>
+      </table>
+
+
+      <div class="columns is-centered m-6">
+        <div class="column is-full has-text-centered content">
+          <h2 class="title is-3">Motif-Scaffolding</h2>
+          <div class="content has-text-justified">
+          <p>
+            We evaluate the performance of various motif-scaffolding methods across different scaffolds, focusing on their effectiveness in designing scaffold structures. The primary objective of this evaluation is to compare the efficacy of structure-based and sequence-based approaches in generating designable scaffolds.
+          </p>
+          <p>The following table shows the performance of motif-scaffolding of structure-based and sequence-based methods.</p>
+        </div>
+              <div class="box m-5">
+                <div class="content has-text-centered">
+                  <img src="images/motif-scaffold.png" alt="motif_scaffolding" width="98%"/>
+                </div>
+              </div>
+          </div>
+        </div>
+
+
+      <h2 class="title is-3" id="leaderboard_test">Antibody Design</h2>
+      <div class="content">
+        <div class="content has-text-justified">
+          <p>
+            Using 13 different metrics from 4 perspectives, we comprehensively evaluate the performance of CDR-H3 (including both sequence and structure) generated by each method for given antigens, thereby revealing their true performance. All methods were trained on the same dataset with parameters reported in their respective papers and tested on a unified set of 55 complexes from the RAbD dataset. 
+          </p>
+          <p>
+            The following table shows the specific performance and preferences of each method (methods capable of generating multiple antibodies are marked with *). The results also reveal that conventional evaluation methods, such as AAR and RMSD, are insufficient for evaluating antibody design methodologies.
+          </p>
+        </div>  
+
+
+      <table class="js-sort-table" id="results">
+          <!-- Table Header -->
+          <thead>
+              <tr class="row-header">
+                <th  class="js-sort"><strong>Method</strong></th>
+                  <th  class="js-sort-number" colspan="3"><strong>Accuracy</strong></th>
+                  <th  class="js-sort-number"><strong>Functionality</strong></th>
+                  <th class="js-sort-number" colspan="3"><strong>Specificity</strong></th>
+              </tr>
+              <tr class="row-header">
+                <th></th>
+                  <th class="js-sort-number" ><strong>AAR ↑</strong></th>
+                  <th class="js-sort-number" ><strong>RMSD ↓</strong></th>
+                  <th class="js-sort-number" ><strong>TM-score ↑</strong></th>
+                  <th class="js-sort-number" ><strong>Binding Energy ↓</strong></th>
+                  <th><strong>SeqSim-outer ↓</strong></th>
+                  <th><strong>SeqSim-inner ↑</strong></th>
+                  <th><strong>PHR ↓</strong></th>
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Table Body -->
+              <tr class="row-highlight">
+                  <td>RAbD (natural)</td>
+                  <td>100.00%</td>
+                  <td>0.00</td>
+                  <td>1.00</td>
+                  <td>-15.33</td>
+                  <td>0.26</td>
+                  <td>N/A</td>
+                  <td>45.78%</td>
+              </tr>
+              <tr>
+                  <td>HERN</td>
+                  <td>33.17%</td>
+                  <td>9.86</td>
+                  <td>0.16</td>
+                  <td>1242.77</td>
+                  <td>0.41</td>
+                  <td>N/A</td>
+                  <td>39.83%</td>
+              </tr>
+              <tr>
+                  <td>MEAN</td>
+                  <td>33.47%</td>
+                  <td><strong>1.82</strong></td>
+                  <td>0.25</td>
+                  <td>263.90</td>
+                  <td>0.65</td>
+                  <td>N/A</td>
+                  <td>40.74%</td>
+              </tr>
+              <tr>
+                  <td>dyMEAN</td>
+                  <td><strong>40.95%</strong></td>
+                  <td>2.36</td>
+                  <td>0.36</td>
+                  <td>889.28</td>
+                  <td>0.58</td>
+                  <td>N/A</td>
+                  <td>42.04%</td>
+              </tr>
+              <tr>
+                  <td>*dyMEAN-FixFR</td>
+                  <td>40.05%</td>
+                  <td>2.37</td>
+                  <td>0.35</td>
+                  <td>612.75</td>
+                  <td>0.60</td>
+                  <td><strong>0.96</strong></td>
+                  <td>43.75%</td>
+              </tr>
+              <tr>
+                  <td>*DiffAb</td>
+                  <td>35.04%</td>
+                  <td>2.53</td>
+                  <td><strong>0.37</strong></td>
+                  <td>489.42</td>
+                  <td><strong>0.37</strong></td>
+                  <td>0.45</td>
+                  <td>40.68%</td>
+              </tr>
+              <tr>
+                  <td>*AbDPO</td>
+                  <td>31.29%</td>
+                  <td>2.79</td>
+                  <td>0.35</td>
+                  <td><strong>116.06</strong></td>
+                  <td>0.38</td>
+                  <td>0.60</td>
+                  <td>69.69%</td>
+              </tr>
+              <tr>
+                  <td>*AbDPO++</td>
+                  <td>36.25%</td>
+                  <td>2.48</td>
+                  <td>0.35</td>
+                  <td>223.73</td>
+                  <td>0.39</td>
+                  <td>0.54</td>
+                  <td>44.51%</td>
+              </tr>
+          </tbody>
+      </table>
+  
+  
+      <table class="js-sort-table" id="results">
+          <!-- Table Header -->
+          <thead>
+            <tr class="row-header">
+              <th  class="js-sort"><strong>Method</strong></th>
+                <th  class="js-sort-number" colspan="6"><strong>Rationality</strong></th>
+            </tr>
+              <tr class="row-header">
+                <th></th>
+                  <th class="js-sort-number"><strong>CN-score ↑</strong></th>
+                  <th class="js-sort-number"><strong>Clashes-inner ↓</strong></th>
+                  <th class="js-sort-number"><strong>Clashes-outer ↓</strong></th>
+                  <th class="js-sort-number"><strong>SeqNat ↑</strong></th>
+                  <th class="js-sort-number"><strong>Total Energy ↓</strong></th>
+                  <th class="js-sort-number"><strong>scRMSD ↓</strong></th>
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Table Body -->
+              <tr class="row-highlight">
+                  <td>RAbD (natural)</td>
+                  <td>50.19</td>
+                  <td>0.07</td>
+                  <td>0.00</td>
+                  <td>-1.74</td>
+                  <td>-16.76</td>
+                  <td>1.77</td>
+              </tr>
+              <tr>
+                  <td>HERN</td>
+                  <td>0.04</td>
+                  <td>0.04</td>
+                  <td>3.25</td>
+                  <td><strong>-1.47</strong></td>
+                  <td>5408.74</td>
+                  <td>9.89</td>
+              </tr>
+              <tr>
+                  <td>MEAN</td>
+                  <td>1.33</td>
+                  <td>11.65</td>
+                  <td>0.29</td>
+                  <td>-1.83</td>
+                  <td>1077.32</td>
+                  <td>2.77</td>
+              </tr>
+              <tr>
+                  <td>dyMEAN</td>
+                  <td>1.49</td>
+                  <td>9.15</td>
+                  <td>0.47</td>
+                  <td>-1.79</td>
+                  <td>1642.65</td>
+                  <td><strong>2.11</strong></td>
+              </tr>
+              <tr>
+                  <td>*dyMEAN-FixFR</td>
+                  <td>1.14</td>
+                  <td>8.88</td>
+                  <td>0.48</td>
+                  <td>-1.82</td>
+                  <td>1239.29</td>
+                  <td>2.48</td>
+              </tr>
+              <tr>
+                  <td>*DiffAb</td>
+                  <td>2.02</td>
+                  <td>1.84</td>
+                  <td>0.19</td>
+                  <td>-1.88</td>
+                  <td>495.69</td>
+                  <td>2.57</td>
+              </tr>
+              <tr>
+                  <td>*AbDPO</td>
+                  <td>1.33</td>
+                  <td>4.14</td>
+                  <td>0.10</td>
+                  <td>-1.99</td>
+                  <td><strong>270.12</strong></td>
+                  <td>2.79</td>
+              </tr>
+              <tr>
+                  <td>*AbDPO++</td>
+                  <td><strong>2.34</strong></td>
+                  <td><strong>1.66</strong></td>
+                  <td><strong>0.08</strong></td>
+                  <td>-1.78</td>
+                  <td>338.14</td>
+                  <td>2.50</td>
+              </tr>
+          </tbody>
+      </table>
+
+
+
+      <h2 class="title is-3" id="leaderboard_test">Protein Folding: Single State Prediction</h2>
+      <div class="content">
+        <div class="content has-text-justified">
+          <p>
+            While most folding models, such as AlphaFold2 and ESMFold, are not generative in nature, 
+            we still consider them ``protein foundation models'' for conformation prediction 
+            because 
+            (1) they are trained on large amounts of structural and/or sequence data; 
+            (2) they have played a fundamental role in understanding sequence-structure relationships; 
+            and (3) they are closely related to foundation models like ESM2 and AlphaFold3, 
+            and serve as pivotal building blocks for conformation prediction models. 
+            Therefore, it is essential to benchmark their performance in discussions of protein conformation prediction.
+          </p>
+          <p>
+           The following table shows the performance of protein folding on CAMEO2022. Results are reported in mean/median over 183 proteins. We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable. <em>Unknown amino acids ("X") in the sequence need to be removed for EigenFold and might introduce small difference in metric evaluation.</em>
+          </p>
+        </div> 
+
+        <table class="js-sort-table" id="results">
+          <thead>
+              <tr class="row-header">
+                  <th></th>
+                  <th class="js-sort-number" colspan="4"><strong>Accuracy</strong></th>
+                  <th class="js-sort-number" colspan="3"><strong>Quality</strong></th>
+              </tr>
+              <tr class="row-header">
+                  <th></th>
+                  <th class="js-sort-number"><strong>TM-score ↑</strong></th>
+                  <th class="js-sort-number"><strong>RMSD ↓</strong></th>
+                  <th class="js-sort-number"><strong>GDT-TS ↑</strong></th>
+                  <th class="js-sort-number"><strong>lDDT ↑</strong></th>
+                  <th class="js-sort-number"><strong>CA clash (%) ↓</strong></th>
+                  <th class="js-sort-number"><strong>CA break (%) ↓</strong></th>
+                  <th class="js-sort-number"><strong>PepBond break (%) ↓</strong></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>AlphaFold2</td>
+                  <td><strong>0.871</strong></td>
+                  <td><strong>3.21</strong></td>
+                  <td><strong>0.860</strong></td>
+                  <td><strong>0.900</strong></td>
+                  <td>0.3</td>
+                  <td>0.0</td>
+                  <td>4.8</td>
+              </tr>
+              <tr class="row-highlight">
+                  <td>OpenFold</td>
+                  <td><u>0.870</u></td>
+                  <td><strong>3.21</strong></td>
+                  <td><u>0.856</u></td>
+                  <td><u>0.895</u></td>
+                  <td>0.4</td>
+                  <td>0.0</td>
+                  <td>2.0</td>
+              </tr>
+              <tr>
+                  <td>RoseTTAFold2</td>
+                  <td>0.859</td>
+                  <td>3.52</td>
+                  <td>0.845</td>
+                  <td>0.888</td>
+                  <td>0.3</td>
+                  <td>0.2</td>
+                  <td>5.5</td>
+              </tr>
+              <tr class="row-highlight">
+                  <td>ESMFold</td>
+                  <td>0.847</td>
+                  <td>3.98</td>
+                  <td>0.826</td>
+                  <td>0.870</td>
+                  <td>0.3</td>
+                  <td>0.0</td>
+                  <td>4.7</td>
+              </tr>
+              <tr>
+                  <td>EigenFold*</td>
+                  <td>0.743</td>
+                  <td>7.65</td>
+                  <td>0.703</td>
+                  <td>0.737</td>
+                  <td>8.0</td>
+                  <td>0.5</td>
+                  <td>N/A</td>
+              </tr>
+          </tbody>
+      </table>
+
+      <h2 class="title is-3" id="leaderboard_test">Multiple State Prediction</h2>
+      <div class="content">
+        <div class="content has-text-justified">
+          <p>
+            In the following, we evaluate the performance of predicting multiples conformational states.
+          </p>
+          <p>
+            The following table shows the performance on the multi-state prediction of BPTI. Accuracy metrics (RMSDens, RMSD Cluster 3) are shown in the mean from 20 bootstrap sampling with replacement with different number of conformation samples (N=10~1000). Diversity and Quality scores are evaluated on 1000 conformations for each model. We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable due to model resolution. RMSD unit: Å.
+          </p>
+        </div>
+
+
+  <table class="js-sort-table" id="results">
+    <thead>
+        <tr class="row-header">
+            <th></th>
+            <th colspan="4" class="js-sort-number"><strong>RMSDens ↓</strong></th>
+            <th colspan="4" class="js-sort-number"><strong>RMSD Cluster 3 ↓</strong></th>
+            <th class="js-sort-number"><strong>Diversity</strong></th>
+            <th colspan="3" class="js-sort-number"><strong>Quality</strong></th>
+        </tr>
+        <tr class="row-header">
+            <th></th>
+            <th class="js-sort-number"><strong>N=10</strong></th>
+            <th class="js-sort-number"><strong>N=100</strong></th>
+            <th class="js-sort-number"><strong>N=500</strong></th>
+            <th class="js-sort-number"><strong>N=1000</strong></th>
+            <th class="js-sort-number"><strong>N=10</strong></th>
+            <th class="js-sort-number"><strong>N=100</strong></th>
+            <th class="js-sort-number"><strong>N=500</strong></th>
+            <th class="js-sort-number"><strong>N=1000</strong></th>
+            <th class="js-sort-number"><strong>Pairwise RMSD</strong></th>
+            <th class="js-sort-number"><strong>CA clash (%) ↓</strong></th>
+            <th class="js-sort-number"><strong>CA break (%) ↓</strong></th>
+            <th class="js-sort-number"><strong>PepBond break (%) ↓</strong></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="row-highlight">
+            <td>EigenFold</td>
+            <td><u>1.56</u></td>
+            <td>1.50</td>
+            <td>1.47</td>
+            <td>1.46</td>
+            <td>2.54</td>
+            <td>2.48</td>
+            <td>2.46</td>
+            <td>2.46</td>
+            <td>0.85</td>
+            <td>1.4</td>
+            <td>4.3</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>MSA-depth256</td>
+            <td>1.57</td>
+            <td>1.54</td>
+            <td>1.52</td>
+            <td>1.52</td>
+            <td>2.51</td>
+            <td>2.47</td>
+            <td>2.45</td>
+            <td>2.45</td>
+            <td>0.20</td>
+            <td>0.0</td>
+            <td>0.0</td>
+            <td>9.2</td>
+        </tr>
+        <tr class="row-highlight">
+            <td>MSA-depth64</td>
+            <td>1.60</td>
+            <td>1.54</td>
+            <td>1.51</td>
+            <td>1.50</td>
+            <td>2.48</td>
+            <td>2.40</td>
+            <td>2.35</td>
+            <td>2.33</td>
+            <td>0.55</td>
+            <td>0.0</td>
+            <td>0.0</td>
+            <td>7.9</td>
+        </tr>
+        <tr>
+            <td>MSA-depth32</td>
+            <td>1.67</td>
+            <td>1.53</td>
+            <td>1.45</td>
+            <td>1.41</td>
+            <td><strong>2.39</strong></td>
+            <td><strong>2.21</strong></td>
+            <td><strong>1.93</strong></td>
+            <td><strong>1.87</strong></td>
+            <td>2.14</td>
+            <td>0.6</td>
+            <td>0.0</td>
+            <td>10.6</td>
+        </tr>
+        <tr class="row-highlight">
+            <td>Str2Str-ODE (T<sub>max</sub>=0.15)</td>
+            <td>2.36</td>
+            <td>2.19</td>
+            <td>2.10</td>
+            <td>2.08</td>
+            <td>3.03</td>
+            <td>2.68</td>
+            <td>2.60</td>
+            <td>2.56</td>
+            <td>1.86</td>
+            <td>0.0</td>
+            <td>0.0</td>
+            <td>13.9</td>
+        </tr>
+        <tr>
+            <td>Str2Str-SDE (T<sub>max</sub>=0.15)</td>
+            <td>2.83</td>
+            <td>2.48</td>
+            <td>2.28</td>
+            <td>2.25</td>
+            <td>3.42</td>
+            <td>2.92</td>
+            <td>2.52</td>
+            <td>2.48</td>
+            <td>3.60</td>
+            <td>0.3</td>
+            <td>0.0</td>
+            <td>16.0</td>
+        </tr>
+        <tr class="row-highlight">
+            <td>AlphaFlow-PDB</td>
+            <td><strong>1.53</strong></td>
+            <td><u>1.45</u></td>
+            <td>1.42</td>
+            <td>1.41</td>
+            <td>2.48</td>
+            <td>2.43</td>
+            <td>2.41</td>
+            <td>2.40</td>
+            <td>0.86</td>
+            <td>0.0</td>
+            <td>0.0</td>
+            <td>13.2</td>
+        </tr>
+        <tr>
+            <td>AlphaFlow-MD</td>
+            <td>1.74</td>
+            <td>1.51</td>
+            <td>1.45</td>
+            <td>1.43</td>
+            <td><u>2.44</u></td>
+            <td>2.32</td>
+            <td>2.28</td>
+            <td>2.24</td>
+            <td>1.26</td>
+            <td>0.0</td>
+            <td>0.1</td>
+            <td>26.2</td>
+        </tr>
+        <tr class="row-highlight">
+            <td>ESMFlow-PDB</td>
+            <td>1.61</td>
+            <td>1.49</td>
+            <td>1.44</td>
+            <td>1.42</td>
+            <td>2.47</td>
+            <td>2.41</td>
+            <td>2.37</td>
+            <td>2.35</td>
+            <td>0.74</td>
+            <td>0.0</td>
+            <td>0.0</td>
+            <td>6.0</td>
+        </tr>
+        <tr>
+            <td>ESMFlow-MD</td>
+            <td>1.66</td>
+            <td>1.50</td>
+            <td><u>1.41</u></td>
+            <td>1.40</td>
+            <td>2.49</td>
+            <td><u>2.29</u></td>
+            <td>2.20</td>
+            <td>2.18</td>
+            <td>1.17</td>
+            <td>0.0</td>
+            <td>0.0</td>
+            <td>14.3</td>
+        </tr>
+        <tr class="row-highlight">
+            <td>ConfDiff-Open-ClsFree</td>
+            <td>1.65</td>
+            <td>1.48</td>
+            <td>1.41</td>
+            <td><u>1.37</u></td>
+            <td>2.56</td>
+            <td>2.30</td>
+            <td><u>2.16</u></td>
+            <td><u>2.03</u></td>
+            <td>1.77</td>
+            <td>0.5</td>
+            <td>0.0</td>
+            <td>5.5</td>
+        </tr>
+        <tr>
+            <td>ConfDiff-Open-MD</td>
+            <td>1.64</td>
+            <td>1.50</td>
+            <td>1.44</td>
+            <td>1.42</td>
+            <td>2.49</td>
+            <td>2.39</td>
+            <td>2.32</td>
+            <td>2.31</td>
+            <td>1.37</td>
+            <td>0.2</td>
+            <td>0.0</td>
+            <td>4.6</td>
+        </tr>
+        <tr class="row-highlight">
+            <td>ConfDiff-ESM-ClsFree</td>
+            <td>1.58</td>
+            <td><u>1.45</u></td>
+            <td><u>1.41</u></td>
+            <td>1.39</td>
+            <td>2.50</td>
+            <td>2.39</td>
+            <td>2.35</td>
+            <td>2.33</td>
+            <td>1.52</td>
+            <td>0.5</td>
+            <td>0.0</td>
+            <td>7.5</td>
+        </tr>
+        <tr>
+            <td>ConfDiff-ESM-MD</td>
+            <td>1.61</td>
+            <td>1.47</td>
+            <td>1.42</td>
+            <td>1.40</td>
+            <td>2.45</td>
+            <td>2.32</td>
+            <td>2.26</td>
+            <td>2.24</td>
+            <td>1.42</td>
+            <td>0.1</td>
+            <td>0.0</td>
+            <td>5.0</td>
+        </tr>
+        <tr class="row-highlight">
+            <td>ConfDiff-ESM-Energy</td>
+            <td>1.63</td>
+            <td>1.47</td>
+            <td>1.43</td>
+            <td>1.42</td>
+            <td>2.55</td>
+            <td>2.43</td>
+            <td>2.41</td>
+            <td>2.40</td>
+            <td>1.26</td>
+            <td>0.1</td>
+            <td>0.0</td>
+            <td>7.5</td>
+        </tr>
+        <tr>
+            <td>ConfDiff-ESM-Force</td>
+            <td>1.58</td>
+            <td><strong>1.44</strong></td>
+            <td><strong>1.37</strong></td>
+            <td><strong>1.36</strong></td>
+            <td>2.45</td>
+            <td>2.33</td>
+            <td>2.23</td>
+            <td>2.22</td>
+            <td>1.76</td>
+            <td>0.1</td>
+            <td>0.0</td>
+            <td>8.9</td>
+        </tr>
+    </tbody>
+</table>
+  <div class="content has-text-justified">
+        <p>
+          The following tables show the performance on conformation prediction task of <strong>apo-holo</strong> dataset. <i>apo</i>/<i>holo</i>-TM are the maximum TMscore of samples to the reference <i>apo/holo</i> structure. 
+          20 conformations are sampled for each protein and results are reported in mean across 91 proteins. 
+          We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable due to model resolution.
+        </p>  
+    </div>
+
+
+
+    <table class="js-sort-table" id="results">
+      <thead>
+          <tr class="row-header">
+              <th></th>
+              <th colspan="2" class="js-sort-number"><strong>Diversity</strong></th>
+              <th colspan="3" class="js-sort-number"><strong>Flexibility: <i>Pearson</i> r on</strong></th>
+              <th colspan="4" class="js-sort-number"><strong>Distributional accuracy</strong></th>
+          </tr>
+          <tr class="row-header">
+              <th></th>
+              <th class="js-sort-number"><strong>Pairwise RMSD</strong></th>
+              <th class="js-sort-number"><strong>*RMSF</strong></th>
+              <th class="js-sort-number"><strong>Pairwise RMSD ↑ </strong></th>
+              <th class="js-sort-number"><strong>*Global RMSF ↑ </strong></th>
+              <th class="js-sort-number"><strong>*Per target RMSF ↑ </strong></th>
+              <th class="js-sort-number"><strong>*RMWD ↓</strong></th>
+              <th class="js-sort-number"><strong>MD PCA W2 ↓</strong></th>
+              <th class="js-sort-number"><strong>Joint PCA W2 ↓</strong></th>
+              <th class="js-sort-number"><strong>PC sim &gt; 0.5 % ↑ </strong></th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr class="row-highlight">
+              <td>MD iid</td>
+              <td>2.76</td>
+              <td>1.63</td>
+              <td>0.96</td>
+              <td>0.97</td>
+              <td>0.99</td>
+              <td>0.71</td>
+              <td>0.76</td>
+              <td>0.70</td>
+              <td>93.9</td>
+          </tr>
+          <tr class="row-highlight">
+              <td>MD 2.5 ns</td>
+              <td>1.54</td>
+              <td>0.98</td>
+              <td>0.89</td>
+              <td>0.85</td>
+              <td>0.85</td>
+              <td>2.21</td>
+              <td>1.57</td>
+              <td>1.93</td>
+              <td>36.6</td>
+          </tr>
+          <tr>
+              <td>EigenFold</td>
+              <td>5.96</td>
+              <td>N/A</td>
+              <td>-0.04</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>2.35</td>
+              <td>7.96</td>
+              <td>12.2</td>
+          </tr>
+          <tr>
+              <td>MSA-depth256</td>
+              <td>0.84</td>
+              <td>0.53</td>
+              <td>0.25</td>
+              <td>0.34</td>
+              <td>0.59</td>
+              <td>3.63</td>
+              <td>1.83</td>
+              <td>2.90</td>
+              <td>29.3</td>
+          </tr>
+          <tr>
+              <td>MSA-depth64</td>
+              <td>2.03</td>
+              <td>1.51</td>
+              <td>0.24</td>
+              <td>0.30</td>
+              <td>0.57</td>
+              <td>4.00</td>
+              <td>1.87</td>
+              <td>3.32</td>
+              <td>18.3</td>
+          </tr>
+          <tr>
+              <td>MSA-depth32</td>
+              <td>5.71</td>
+              <td>7.96</td>
+              <td>0.07</td>
+              <td>0.17</td>
+              <td>0.53</td>
+              <td>6.12</td>
+              <td>2.50</td>
+              <td>5.67</td>
+              <td>17.1</td>
+          </tr>
+          <tr>
+              <td>Str2Str-ODE (t=0.1)</td>
+              <td>1.66</td>
+              <td>N/A</td>
+              <td>0.13</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>2.12</td>
+              <td>4.42</td>
+              <td>6.1</td>
+          </tr>
+          <tr>
+              <td>Str2Str-ODE (t=0.3)</td>
+              <td>3.15</td>
+              <td>N/A</td>
+              <td>0.12</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>2.23</td>
+              <td>4.75</td>
+              <td>9.8</td>
+          </tr>
+          <tr>
+              <td>Str2Str-SDE (t=0.1)</td>
+              <td>4.74</td>
+              <td>N/A</td>
+              <td>0.10</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>2.54</td>
+              <td>8.84</td>
+              <td>9.8</td>
+          </tr>
+          <tr>
+              <td>Str2Str-SDE (t=0.3)</td>
+              <td>7.54</td>
+              <td>N/A</td>
+              <td>0.00</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>3.29</td>
+              <td>12.28</td>
+              <td>7.3</td>
+          </tr>
+          <tr>
+              <td>AlphaFlow-PDB</td>
+              <td>2.58</td>
+              <td>1.20</td>
+              <td>0.27</td>
+              <td>0.46</td>
+              <td>0.81</td>
+              <td>2.96</td>
+              <td>1.66</td>
+              <td>2.60</td>
+              <td>37.8</td>
+          </tr>
+          <tr>
+              <td>AlphaFlow-MD</td>
+              <td>2.88</td>
+              <td>1.63</td>
+              <td><u>0.53</u></td>
+              <td><u>0.66</u></td>
+              <td><strong>0.85</strong></td>
+              <td><strong>2.68</strong></td>
+              <td><u>1.53</u></td>
+              <td><u>2.28</u></td>
+              <td><strong>39.0</strong></td>
+          </tr>
+          <tr>
+              <td>ESMFlow-PDB</td>
+              <td>3.00</td>
+              <td>1.68</td>
+              <td>0.14</td>
+              <td>0.27</td>
+              <td>0.71</td>
+              <td>4.20</td>
+              <td>1.77</td>
+              <td>3.54</td>
+              <td>28.0</td>
+          </tr>
+          <tr>
+              <td>ESMFlow-MD</td>
+              <td>3.34</td>
+              <td>2.13</td>
+              <td>0.19</td>
+              <td>0.30</td>
+              <td>0.76</td>
+              <td>3.63</td>
+              <td>1.54</td>
+              <td>3.15</td>
+              <td>25.6</td>
+          </tr>
+          <tr>
+              <td>ConfDiff-Open-ClsFree</td>
+              <td>3.68</td>
+              <td>2.12</td>
+              <td>0.40</td>
+              <td>0.54</td>
+              <td>0.83</td>
+              <td>2.92</td>
+              <td>1.50</td>
+              <td>2.54</td>
+              <td>46.3</td>
+          </tr>
+          <tr>
+              <td>ConfDiff-Open-PDB</td>
+              <td>2.90</td>
+              <td>1.43</td>
+              <td>0.38            </td>
+              <td>0.51</td>
+              <td>0.82</td>
+              <td>2.97</td>
+              <td>1.57</td>
+              <td>2.51</td>
+              <td>34.1</td>
+          </tr>
+          <tr>
+              <td>ConfDiff-Open-MD</td>
+              <td>3.43</td>
+              <td>2.21</td>
+              <td><strong>0.59</strong></td>
+              <td><strong>0.67</strong></td>
+              <td><strong>0.85</strong></td>
+              <td><u>2.76</u></td>
+              <td><strong>1.44</strong></td>
+              <td><strong>2.25</strong></td>
+              <td>35.4</td>
+          </tr>
+          <tr>
+              <td>ConfDiff-ESM-ClsFree</td>
+              <td>4.04</td>
+              <td>2.84</td>
+              <td>0.31</td>
+              <td>0.43</td>
+              <td>0.82</td>
+              <td>3.82</td>
+              <td>1.72</td>
+              <td>3.06</td>
+              <td>37.8</td>
+          </tr>
+          <tr>
+              <td>ConfDiff-ESM-PDB</td>
+              <td>3.42</td>
+              <td>2.06</td>
+              <td>0.29</td>
+              <td>0.40</td>
+              <td>0.80</td>
+              <td>3.67</td>
+              <td>1.70</td>
+              <td>3.17</td>
+              <td>34.1</td>
+          </tr>
+          <tr>
+              <td>ConfDiff-ESM-MD</td>
+              <td>3.91</td>
+              <td>2.79</td>
+              <td>0.35</td>
+              <td>0.48</td>
+              <td>0.82</td>
+              <td>3.67</td>
+              <td>1.66</td>
+              <td>2.89</td>
+              <td><strong>39.0</strong></td>
+          </tr>
+      </tbody>
+  </table>
+
+  <table class="js-sort-table" id="results">
+    <thead>
+        <tr class="row-header">
+            <th></th>
+            <th colspan="4" class="js-sort-number"><strong>Ensemble observables</strong></th>
+            <th colspan="3" class="js-sort-number"><strong>Quality</strong></th>
+        </tr>
+        <tr class="row-header">
+            <th></th>
+            <th class="js-sort-number"><strong>Weak contacts J ↑</strong></th>
+            <th class="js-sort-number"><strong>Transient contacts J ↑</strong></th>
+            <th class="js-sort-number"><strong>*Exposed residue J ↑</strong></th>
+            <th class="js-sort-number"><strong>*Exposed MI matrix ρ ↑</strong></th>
+            <th class="js-sort-number"><strong>CA break % ↓</strong></th>
+            <th class="js-sort-number"><strong>CA clash % ↓</strong></th>
+            <th class="js-sort-number"><strong>PepBond break % ↓</strong></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="row-highlight">
+            <td>MD iid</td>
+            <td>0.90</td>
+            <td>0.80</td>
+            <td>0.93</td>
+            <td>0.56</td>
+            <td>0.0</td>
+            <td>0.1</td>
+            <td>3.4</td>
+        </tr>
+        <tr class="row-highlight">
+            <td>MD 2.5 ns</td>
+            <td>0.62</td>
+            <td>0.45</td>
+            <td>0.64</td>
+            <td>0.24</td>
+            <td>0.0</td>
+            <td>0.1</td>
+            <td>3.4</td>
+        </tr>
+        <tr>
+            <td>EigenFold</td>
+            <td>0.36</td>
+            <td>0.18</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>0.7</td>
+            <td>9.6</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>MSA-depth256</td>
+            <td>0.30</td>
+            <td>0.28</td>
+            <td>0.33</td>
+            <td>0.06</td>
+            <td>0.0</td>
+            <td>0.2</td>
+            <td>5.9</td>
+        </tr>
+        <tr>
+            <td>MSA-depth64</td>
+            <td>0.38</td>
+            <td>0.27</td>
+            <td>0.38</td>
+            <td>0.12</td>
+            <td>0.0</td>
+            <td>0.2</td>
+            <td>8.4</td>
+        </tr>
+        <tr>
+            <td>MSA-depth32</td>
+            <td>0.39</td>
+            <td>0.24</td>
+            <td>0.36</td>
+            <td>0.15</td>
+            <td>0.1</td>
+            <td>0.5</td>
+            <td>13.0</td>
+        </tr>
+        <tr>
+            <td>Str2Str-ODE (t=0.1)</td>
+            <td>0.42</td>
+            <td>0.17</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>0.0</td>
+            <td>0.1</td>
+            <td>13.7</td>
+        </tr>
+        <tr>
+            <td>Str2Str-ODE (t=0.3)</td>
+            <td>0.41</td>
+            <td>0.17</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>0.0</td>
+            <td>0.1</td>
+            <td>14.8</td>
+        </tr>
+        <tr>
+            <td>Str2Str-SDE (t=0.1)</td>
+            <td>0.40</td>
+            <td>0.13</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>1.6</td>
+            <td>0.2</td>
+            <td>23.0</td>
+        </tr>
+        <tr>
+            <td>Str2Str-SDE (t=0.3)</td>
+            <td>0.35</td>
+            <td>0.13</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>1.5</td>
+            <td>0.2</td>
+            <td>21.4</td>
+        </tr>
+        <tr>
+            <td>AlphaFlow-PDB</td>
+            <td>0.44</td>
+            <td>0.33</td>
+            <td>0.42</td>
+            <td>0.18</td>
+            <td>0.0</td>
+            <td>0.2</td>
+            <td>6.6</td>
+        </tr>
+        <tr>
+            <td>AlphaFlow-MD</td>
+            <td><u>0.57</u></td>
+            <td><strong>0.38</strong></td>
+            <td><strong>0.50</strong></td>
+            <td><strong>0.24</strong></td>
+            <td>0.0</td>
+            <td>0.2</td>
+            <td>21.7</td>
+        </tr>
+        <tr>
+            <td>ESMFlow-PDB</td>
+            <td>0.42</td>
+            <td>0.29</td>
+            <td>0.41</td>
+            <td>0.16</td>
+            <td>0.0</td>
+            <td>0.6</td>
+            <td>5.4</td>
+        </tr>
+        <tr>
+            <td>ESMFlow-MD</td>
+            <td>0.51</td>
+            <td>0.33</td>
+            <td>0.47</td>
+            <td>0.21</td>
+            <td>0.0</td>
+            <td>0.3</td>
+            <td>10.9</td>
+        </tr>
+        <tr>
+            <td>ConfDiff-Open-PDB</td>
+            <td>0.47</td>
+            <td>0.34</td>
+            <td>0.43</td>
+            <td>0.18</td>
+            <td>0.0</td>
+            <td>0.9</td>
+            <td>5.7</td>
+        </tr>
+        <tr>
+            <td>ConfDiff-Open-ClsFree</td>
+            <td>0.54</td>
+            <td>0.33</td>
+            <td>0.47</td>
+            <td>0.21</td>
+            <td>0.0</td>
+            <td>1.2</td>
+            <td>5.7</td>
+        </tr>
+        <tr>
+            <td>ConfDiff-Open-MD</td>
+            <td><strong>0.59</strong></td>
+            <td><u>0.36</u></td>
+            <td><strong>0.50</strong></td>
+            <td><strong>0.24</strong></td>
+            <td>0.0</td>
+            <td>0.8</td>
+            <td>6.3</td>
+        </tr>
+        <tr>
+            <td>ConfDiff-ESM-PDB</td>
+            <td>0.48</td>
+            <td>0.31</td>
+            <td>0.42</td>
+            <td>0.18</td>
+            <td>0.0</td>
+            <td>1.6</td>
+            <td>3.9</td>
+        </tr>
+        <tr>
+            <td>ConfDiff-ESM-ClsFree</td>
+            <td>0.54</td>
+            <td>0.31</td>
+            <td>0.47</td>
+            <td>0.18</td>
+            <td>0.0</td>
+            <td>1.8</td>
+            <td>4.3</td>
+        </tr>
+        <tr>
+            <td>ConfDiff-ESM-MD</td>
+            <td>0.56</td>
+            <td>0.34</td>
+            <td>0.48</td>
+            <td>0.23</td>
+            <td>0.0</td>
+            <td>1.5</td>
+            <td>4.0</td>
+        </tr>
+    </tbody>
+</table>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <pre><code>@misc{ye2024proteinbenchholisticevaluationprotein,
+      title={ProteinBench: A Holistic Evaluation of Protein Foundation Models}, 
+      author={Fei Ye and Zaixiang Zheng and Dongyu Xue and Yuning Shen and Lihao Wang and Yiming Ma and Yan Wang and Xinyou Wang and Xiangxin Zhou and Quanquan Gu},
+      year={2024},
+      eprint={2409.06744},
+      archivePrefix={arXiv},
+      primaryClass={q-bio.QM},
+      url={https://arxiv.org/abs/2409.06744}, 
+}</code></pre>
+  </div>
+</section>
+
+<section>
+  <div class="section" id="org-banners" style="display:flex">
+    <a href="" target="_blank" rel="external">
+        <img class="center-block org-banner" src="images/BDRlogo.png">
+    </a>
+  </div>
+</section>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is adapted from <a href="https://nerfies.github.io/">Nerfies</a>, licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+</footer>
+
+</body>
+</html>
