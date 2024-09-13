@@ -1233,7 +1233,7 @@
             Therefore, it is essential to benchmark their performance in discussions of protein conformation prediction.
           </p>
           <p>
-           The following table shows the performance of protein folding on CAMEO2022. Results are reported in mean/median over 183 proteins. We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable. <em>Unknown amino acids ("X") in the sequence need to be removed for EigenFold and might introduce small difference in metric evaluation.</em>
+           The following table shows the performance of protein folding on CAMEO2022. Results are reported in mean/median over 183 proteins. We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable. <em>*Unknown amino acids ("X") in the sequence need to be removed for EigenFold and might introduce small difference in metric evaluation.</em>
           </p>
         </div> 
 
@@ -1590,14 +1590,211 @@
     </tbody>
 </table>
 
+    <div class="content has-text-justified">
+          <p>
+            The following tables show the performance on conformation prediction task of <strong>apo-holo</strong> dataset. <i>apo</i>/<i>holo</i>-TM are the maximum TMscore of samples to the reference <i>apo/holo</i> structure. 
+            20 conformations are sampled for each protein and results are reported in mean across 91 proteins. 
+            We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable due to model resolution.
+          </p>  
+      </div>
+      <table class="js-sort-table" id="results">
+        <thead>
+            <tr class="row-header">
+                <th></th>
+                <th colspan="3" class="js-sort-number"><strong>Accuracy</strong></th>
+                <th class="js-sort-number"><strong>Diversity</strong></th>
+                <th colspan="3" class="js-sort-number"><strong>Quality</strong></th>
+            </tr>
+            <tr class="row-header">
+                <th></th>
+                <th class="js-sort-number"><strong><i>apo</i>-TM ↑</strong></th>
+                <th class="js-sort-number"><strong><i>holo</i>-TM ↑</strong></th>
+                <th class="js-sort-number"><strong>TMens ↑</strong></th>
+                <th class="js-sort-number"><strong>Pairwise TM</strong></th>
+                <th class="js-sort-number"><strong>CA clash (%) ↓</strong></th>
+                <th class="js-sort-number"><strong>CA break (%) ↓</strong></th>
+                <th class="js-sort-number"><strong>PepBond break (%) ↓</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="row-highlight">
+                <td><i>apo</i> model</td>
+                <td>1.000</td>
+                <td>0.790</td>
+                <td>0.895</td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td>EigenFold</td>
+                <td>0.831</td>
+                <td>0.864</td>
+                <td>0.847</td>
+                <td>0.907</td>
+                <td>3.6</td>
+                <td>0.3</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td>MSA-depth256</td>
+                <td>0.845</td>
+                <td><u>0.889</u></td>
+                <td><u>0.867</u></td>
+                <td>0.978</td>
+                <td>0.2</td>
+                <td>0.0</td>
+                <td>4.6</td>
+            </tr>
+            <tr>
+                <td>MSA-depth64</td>
+                <td>0.844</td>
+                <td>0.883</td>
+                <td>0.863</td>
+                <td>0.950</td>
+                <td>0.2</td>
+                <td>0.0</td>
+                <td>5.7</td>
+            </tr>
+            <tr>
+                <td>MSA-depth32</td>
+                <td>0.824</td>
+                <td>0.857</td>
+                <td>0.841</td>
+                <td>0.864</td>
+                <td>0.2</td>
+                <td>0.0</td>
+                <td>8.9</td>
+            </tr>
+            <tr>
+                <td>Str2Str-ODE (T<sub>max</sub>=0.1)</td>
+                <td>0.762</td>
+                <td>0.778</td>
+                <td>0.770</td>
+                <td>0.954</td>
+                <td>0.2</td>
+                <td>0.0</td>
+                <td>14.0</td>
+            </tr>
+            <tr>
+                <td>Str2Str-ODE (T<sub>max</sub>=0.3)</td>
+                <td>0.766</td>
+                <td>0.781</td>
+                <td>0.774</td>
+                <td>0.872</td>
+                <td>0.2</td>
+                <td>0.0</td>
+                <td>14.7</td>
+            </tr>
+            <tr>
+                <td>Str2Str-SDE (T<sub>max</sub>=0.1)</td>
+                <td>0.682</td>
+                <td>0.693</td>
+                <td>0.688</td>
+                <td>0.760</td>
+                <td>0.2</td>
+                <td>1.5</td>
+                <td>22.6</td>
+            </tr>
+            <tr>
+                <td>Str2Str-SDE (T<sub>max</sub>=0.3)</td>
+                <td>0.680</td>
+                <td>0.689</td>
+                <td>0.684</td>
+                <td>0.639</td>
+                <td>0.2</td>
+                <td>1.4</td>
+                <td>21.1</td>
+            </tr>
+            <tr>
+                <td>AlphaFlow-PDB</td>
+                <td><u>0.855</u></td>
+                <td><strong>0.891</strong></td>
+                <td><strong>0.873</strong></td>
+                <td>0.924</td>
+                <td>0.3</td>
+                <td>0.0</td>
+                <td>6.6</td>
+            </tr>
+            <tr>
+                <td>AlphaFlow-MD</td>
+                <td><strong>0.857</strong></td>
+                <td>0.863</td>
+                <td>0.860</td>
+                <td>0.894</td>
+                <td>0.2</td>
+                <td>0.0</td>
+                <td>20.8</td>
+            </tr>
+            <tr>
+                <td>ESMFlow-PDB</td>
+                <td>0.849</td>
+                <td>0.882</td>
+                <td>0.866</td>
+                <td>0.935</td>
+                <td>0.3</td>
+                <td>0.0</td>
+                <td>4.8</td>
+            </tr>
+            <tr>
+                <td>ESMFlow-MD</td>
+                <td>0.851</td>
+                <td>0.864</td>
+                <td>0.858</td>
+                <td>0.897</td>
+                <td>0.1</td>
+                <td>0.0</td>
+                <td>10.9</td>
+            </tr>
+            <tr>
+                <td>ConfDiff-Open-ClsFree</td>
+                <td>0.838</td>
+                <td>0.879</td>
+                <td>0.859</td>
+                <td>0.870</td>
+                <td>0.8</td>
+                <td>0.0</td>
+                <td>5.8</td>
+            </tr>
+            <tr>
+                <td>ConfDiff-Open-MD</td>
+                <td>0.839</td>
+                <td>0.874</td>
+                <td>0.857</td>
+                <td>0.863</td>
+                <td>0.4</td>
+                <td>0.0</td>
+                <td>6.8</td>
+            </tr>
+            <tr>
+                <td>ConfDiff-ESM-ClsFree</td>
+                <td>0.837</td>
+                <td>0.864</td>
+                <td>0.850</td>
+                <td>0.846</td>
+                <td>0.7</td>
+                <td>0.0</td>
+                <td>4.6</td>
+            </tr>
+            <tr>
+                <td>ConfDiff-ESM-MD</td>
+                <td>0.836</td>
+                <td>0.862</td>
+                <td>0.849</td>
+                <td>0.846</td>
+                <td>0.3</td>
+                <td>0.0</td>
+                <td>4.1</td>
+            </tr>
+        </tbody>
+    </table>
+
+
 <h2 class="title is-3" id="leaderboard_test">Distribution Prediction</h2>
 <div class="content">
   <div class="content has-text-justified">
-        <p>
-          The following tables show the performance on conformation prediction task of <strong>apo-holo</strong> dataset. <i>apo</i>/<i>holo</i>-TM are the maximum TMscore of samples to the reference <i>apo/holo</i> structure. 
-          20 conformations are sampled for each protein and results are reported in mean across 91 proteins. 
-          We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable due to model resolution.
-        </p>  
+        <p>The following table shows the performance on distribution prediction for the ATLAS test set. A total of 250 structures were sampled for each protein, and the median values across 82 proteins are reported. The <strong>best</strong> performance is highlighted in bold, and the <u>second-best</u> is underlined. *These metrics require all-atom or backbone predictions; therefore, EigenFold and Str2Str do not have sufficient resolution for evaluation (indicated as "N/A").</p>
     </div>
 
 
