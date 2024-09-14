@@ -1221,17 +1221,7 @@
       <div class="content">
         <div class="content has-text-justified">
           <p>
-            While most folding models, such as AlphaFold2 and ESMFold, are not generative in nature, 
-            we still consider them ``protein foundation models'' for conformation prediction 
-            because 
-            (1) they are trained on large amounts of structural and/or sequence data; 
-            (2) they have played a fundamental role in understanding sequence-structure relationships; 
-            and (3) they are closely related to foundation models like ESM2 and AlphaFold3, 
-            and serve as pivotal building blocks for conformation prediction models. 
-            Therefore, it is essential to benchmark their performance in discussions of protein conformation prediction.
-          </p>
-          <p>
-           The following table shows the performance of protein folding on CAMEO2022. Results are reported in mean/median over 183 proteins. We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable. <em>*Unknown amino acids ("X") in the sequence need to be removed for EigenFold and might introduce small difference in metric evaluation.</em>
+            We assess the performance of protein folding as single-state conformation prediction. Protein folding models have played a pivotal role in understanding sequence-structure relationships and serve as a foundational component for protein conformation models. Therefore, it is essential to benchmark their performance in discussions of protein conformation prediction.
           </p>
         </div> 
 
@@ -1311,7 +1301,7 @@
       <div class="content">
         <div class="content has-text-justified">
           <p>
-            In the following, we evaluate the performance of predicting multiples conformational states.
+            In the following, we evaluate the performance of predicting multiple conformational states.
           </p>
           <p>
             The following table shows the performance on the multi-state prediction of BPTI. Accuracy metrics (RMSDens, RMSD Cluster 3) are shown in the mean from 20 bootstrap sampling with replacement with different number of conformation samples (N=10~1000). Diversity and Quality scores are evaluated on 1000 conformations for each model. We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable due to model resolution. RMSD unit: Å.
@@ -1590,7 +1580,7 @@
 
     <div class="content has-text-justified">
           <p>
-            The following tables show the performance on conformation prediction task of <strong>apo-holo</strong> dataset. <i>apo</i>/<i>holo</i>-TM are the maximum TMscore of samples to the reference <i>apo/holo</i> structure. 
+            The following table show the performance on conformation prediction task of <strong>apo-holo</strong> dataset. <i>apo</i>/<i>holo</i>-TM are the maximum TMscore of samples to the reference <i>apo/holo</i> structure. 
             20 conformations are sampled for each protein and results are reported in mean across 91 proteins. 
             We highlight the <strong>best</strong> performance in bold and the <u>second-best</u> with the underline. "N/A" stands for not applicable due to model resolution.
           </p>  
